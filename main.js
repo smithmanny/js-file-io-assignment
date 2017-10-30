@@ -13,6 +13,6 @@ const employee =
 console.log(`is Employee? ${employee instanceof Employee}`)
 console.log(`parsed: ${util.inspect(employee)}`)
 
-employee.promote('chief petty grunt', 10)
+employee.promote('Contractor', 10)
 
 console.log(`after promotion: ${util.inspect(employee)}`)
