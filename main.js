@@ -10,26 +10,23 @@ const employee = new Promise((resolve, reject) => {
       Employee.parseFromFilePath(path.resolve(__dirname, 'employee.json'))
     );
   } else {
-    reject('You didn\'t get the promotion');
+    reject("You didn't get the promotion");
   }
 });
 
 // Refactored using promises
-employee
-  .then(val => {
+employee.then(
+  val => {
     console.log(`is Employee? ${val instanceof Employee}`);
-    return val;
-  })
-  .then(val => {
     console.log(`parsed: ${util.inspect(val)}`);
+    // Promote Employee
     val.promote('Contractor', 10);
-    return val;
-  })
-  .then(val => {
     console.log(`after promotion: ${util.inspect(val)}`);
-  }, (err) => {
-    console.log(err)
-  });
+  },
+  err => {
+    console.log(err);
+  }
+);
 
 // const employee =
 //   Employee
