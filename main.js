@@ -1,18 +1,45 @@
-'use strict'
+'use strict';
 
-const util = require('util')
-const path = require('path')
-const { Employee } = require('./Employee')
+const util = require('util');
+const path = require('path');
+const { Employee } = require('./Employee');
 
-const employee =
-  Employee
-    .parseFromFilePath(
-      path.resolve(__dirname, 'employee.json')
-    )
+const employee = new Promise((resolve, reject) => {
+  if (resolve) {
+    resolve(
+      Employee.parseFromFilePath(path.resolve(__dirname, 'employee.json'))
+    );
+  } else {
+    reject('You didn\'t get the promotion');
+  }
+});
 
-console.log(`is Employee? ${employee instanceof Employee}`)
-console.log(`parsed: ${util.inspect(employee)}`)
+// Refactored using promises
+employee
+  .then(val => {
+    console.log(`is Employee? ${val instanceof Employee}`);
+    return val;
+  })
+  .then(val => {
+    console.log(`parsed: ${util.inspect(val)}`);
+    val.promote('Contractor', 10);
+    return val;
+  })
+  .then(val => {
+    console.log(`after promotion: ${util.inspect(val)}`);
+  }, (err) => {
+    console.log(err)
+  });
 
-employee.promote('Contractor', 10)
+// const employee =
+//   Employee
+//     .parseFromFilePath(
+//       path.resolve(__dirname, 'employee.json')
+//     )
 
-console.log(`after promotion: ${util.inspect(employee)}`)
+// console.log(`is Employee? ${employee instanceof Employee}`)
+// console.log(`parsed: ${util.inspect(employee)}`)
+
+// employee.promote('Contractor', 10)
+
+// console.log(`after promotion: ${util.inspect(employee)}`)
